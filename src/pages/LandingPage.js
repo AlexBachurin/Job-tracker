@@ -2,6 +2,7 @@ import React from "react";
 import { Logo } from "../components";
 import main from "../assets/images/main.svg";
 import Wrapper from "../assets/wrappers/Landing/Landing";
+import { Link } from "react-router-dom";
 const LandingPage = () => {
 	return (
 		<Wrapper>
@@ -23,7 +24,9 @@ const LandingPage = () => {
 						beard iPhone kitsch paleo etsy kale chips 3 wolf moon franzen XOXO
 						master cleanse.
 					</p>
-					<button className="btn btn-hero">Login/Register</button>
+					<Link to={"/register"} className="btn btn-hero">
+						Login/Register{" "}
+					</Link>
 				</div>
 				<img src={main} className="main-img" alt="main-img" />
 			</div>
