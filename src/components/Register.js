@@ -30,7 +30,7 @@ const Register = ({ values, handleChange, changeMember, isLoading }) => {
 				labelText="Password"
 			/>
 			<button className="btn btn-block" type="submit" disabled={isLoading}>
-				Submit
+				{isLoading ? "Loading..." : "Submit"}
 			</button>
 			<div>
 				<p>
