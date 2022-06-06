@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { Logo, FormRow } from "../components";
+import React, { useState, useEffect } from "react";
+import { Logo, FormRow, Login, Register } from "../components";
+import Wrapper from "../assets/wrappers/Register/Register";
 const initialState = {
 	name: "",
 	email: "",
@@ -20,42 +20,39 @@ const RegisterPage = () => {
 		console.log(e.target);
 	};
 
+	//change member
+	const changeMember = () => {
+		setValues({ ...values, isMember: !values.isMember });
+	};
+
+	//clear form every time isMember state changes
+	// useEffect(() => {
+	// 	setValues({
+	// 		name: "",
+	// 		email: "",
+	// 		password: "",
+	// 	});
+	// }, [values.isMember]);
+
 	return (
-		<Wrapper className="full-page">
-			<form className="form" onSubmit={handleSubmit}>
-				<Logo />
-				{/* name field */}
-				<FormRow
-					type="text"
-					name="name"
-					value={values.name}
+		<>
+			{values.isMember ? (
+				<Login
+					values={values}
 					handleChange={handleChange}
-					labelText="Name"
+					handleSubmit={handleSubmit}
+					changeMember={changeMember}
 				/>
-				{/* email field */}
-				<FormRow
-					type="email"
-					name="email"
-					value={values.email}
+			) : (
+				<Register
+					values={values}
 					handleChange={handleChange}
-					labelText="Email"
+					handleSubmit={handleSubmit}
+					changeMember={changeMember}
 				/>
-				{/* password field */}
-				<FormRow
-					type="password"
-					name="password"
-					value={values.password}
-					handleChange={handleChange}
-					labelText="Password"
-				/>
-				<button className="btn btn-block" type="submit">
-					Submit
-				</button>
-			</form>
-		</Wrapper>
+			)}
+		</>
 	);
 };
-
-const Wrapper = styled.div``;
 
 export default RegisterPage;
