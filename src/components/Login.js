@@ -1,7 +1,7 @@
 import React from "react";
 import { FormRow } from "../components";
 
-const Login = ({ values, handleChange, changeMember }) => {
+const Login = ({ values, handleChange, changeMember, isLoading }) => {
 	return (
 		<>
 			<h3>Login</h3>
@@ -21,7 +21,7 @@ const Login = ({ values, handleChange, changeMember }) => {
 				handleChange={handleChange}
 				labelText="Password"
 			/>
-			<button className="btn btn-block" type="submit">
+			<button className="btn btn-block" type="submit" disabled={isLoading}>
 				Submit
 			</button>
 			<div>

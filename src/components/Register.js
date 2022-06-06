@@ -1,7 +1,7 @@
 import React from "react";
 import { FormRow } from "../components";
 
-const Register = ({ values, handleChange, changeMember }) => {
+const Register = ({ values, handleChange, changeMember, isLoading }) => {
 	return (
 		<>
 			<h3>Register</h3>
@@ -29,7 +29,7 @@ const Register = ({ values, handleChange, changeMember }) => {
 				handleChange={handleChange}
 				labelText="Password"
 			/>
-			<button className="btn btn-block" type="submit">
+			<button className="btn btn-block" type="submit" disabled={isLoading}>
 				Submit
 			</button>
 			<div>

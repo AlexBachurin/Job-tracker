@@ -56,12 +56,14 @@ const RegisterPage = () => {
 						values={values}
 						handleChange={handleChange}
 						changeMember={changeMember}
+						isLoading={isLoading}
 					/>
 				) : (
 					<Register
 						values={values}
 						handleChange={handleChange}
 						changeMember={changeMember}
+						isLoading={isLoading}
 					/>
 				)}
 			</form>
