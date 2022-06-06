@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Login, Register } from "../components";
 import { Logo, FormRow } from "../components";
 import Wrapper from "../assets/wrappers/Register/Register";
+import { toast } from "react-toastify";
 const initialState = {
 	name: "",
 	email: "",
@@ -27,7 +28,7 @@ const RegisterPage = () => {
 			!values.email ||
 			!values.password
 		) {
-			console.log("please fill all fields");
+			toast.error("Please Fill Out All Fields");
 			return;
 		}
 	};
@@ -37,14 +38,9 @@ const RegisterPage = () => {
 		setValues({ ...values, isMember: !values.isMember });
 	};
 
-	// clear form every time isMember state changes
-	// useEffect(() => {
-	// 	setValues(initialState);
-	// }, [values.isMember]);
-
 	return (
 		<Wrapper className="full-page">
-			<form className="form" onSubmit={handleSubmit}>
+			<form ref={formRef} className="form" onSubmit={handleSubmit}>
 				<Logo />
 				{values.isMember ? (
 					<Login
