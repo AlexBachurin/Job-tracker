@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Login, Register } from "../components";
-
+import { Logo, FormRow } from "../components";
+import Wrapper from "../assets/wrappers/Register/Register";
 const initialState = {
 	name: "",
 	email: "",
@@ -9,15 +10,26 @@ const initialState = {
 };
 const RegisterPage = () => {
 	const [values, setValues] = useState(initialState);
-
+	const formRef = useRef(null);
 	const handleChange = (e) => {
 		//get targetted row name and set input value to state
-		console.log(e.target.name);
+		const rowName = e.target.name;
+		const value = e.target.value;
+		setValues((oldValues) => {
+			return { ...oldValues, [rowName]: value };
+		});
 	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(e.target);
+		if (
+			(!values.name && !values.isMember) ||
+			!values.email ||
+			!values.password
+		) {
+			console.log("please fill all fields");
+			return;
+		}
 	};
 
 	//change member
@@ -25,33 +37,30 @@ const RegisterPage = () => {
 		setValues({ ...values, isMember: !values.isMember });
 	};
 
-	//clear form every time isMember state changes
+	// clear form every time isMember state changes
 	// useEffect(() => {
-	// 	setValues({
-	// 		name: "",
-	// 		email: "",
-	// 		password: "",
-	// 	});
+	// 	setValues(initialState);
 	// }, [values.isMember]);
 
 	return (
-		<>
-			{values.isMember ? (
-				<Login
-					values={values}
-					handleChange={handleChange}
-					handleSubmit={handleSubmit}
-					changeMember={changeMember}
-				/>
-			) : (
-				<Register
-					values={values}
-					handleChange={handleChange}
-					handleSubmit={handleSubmit}
-					changeMember={changeMember}
-				/>
-			)}
-		</>
+		<Wrapper className="full-page">
+			<form className="form" onSubmit={handleSubmit}>
+				<Logo />
+				{values.isMember ? (
+					<Login
+						values={values}
+						handleChange={handleChange}
+						changeMember={changeMember}
+					/>
+				) : (
+					<Register
+						values={values}
+						handleChange={handleChange}
+						changeMember={changeMember}
+					/>
+				)}
+			</form>
+		</Wrapper>
 	);
 };
 
