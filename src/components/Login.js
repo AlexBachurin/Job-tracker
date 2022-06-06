@@ -28,25 +28,14 @@ const Login = ({ values, handleSubmit, handleChange, changeMember }) => {
 					Submit
 				</button>
 				<div>
-					{values.isMember ? (
-						<p>
-							Already a member?
-							{
-								<button onClick={changeMember} className="member-btn">
-									Login
-								</button>
-							}
-						</p>
-					) : (
-						<p>
-							Not a member yet?
-							{
-								<button onClick={changeMember} className="member-btn">
-									Register
-								</button>
-							}
-						</p>
-					)}
+					<p>
+						Not a member yet?
+						{
+							<button onClick={changeMember} className="member-btn">
+								Register
+							</button>
+						}
+					</p>
 				</div>
 			</form>
 		</Wrapper>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Logo, FormRow, Login, Register } from "../components";
-import Wrapper from "../assets/wrappers/Register/Register";
+import { Login, Register } from "../components";
+
 const initialState = {
 	name: "",
 	email: "",
