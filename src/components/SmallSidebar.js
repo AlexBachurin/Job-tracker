@@ -35,6 +35,7 @@ const SmallSidebar = () => {
 										return isActive ? "nav-link active" : "nav-link";
 									}}
 									id={id}
+									onClick={() => dispatch(toggleSidebar())}
 								>
 									<span className="icon">{icon}</span>
 									{text}
