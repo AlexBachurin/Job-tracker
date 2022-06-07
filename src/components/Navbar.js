@@ -8,6 +8,12 @@ const Navbar = () => {
 	const { user } = useSelector((store) => store.user);
 	const dispatch = useDispatch();
 
+	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+	const toggleDropdown = () => {
+		setIsDropdownOpen(!isDropdownOpen);
+	};
+
 	return (
 		<Wrapper>
 			<div className="nav-center">
@@ -22,18 +28,17 @@ const Navbar = () => {
 					<h3 className="logo-text">dashboard</h3>
 				</div>
 				<div className="btn-container">
-					<button
-						className="btn"
-						onClick={() => console.log("toggle dropdown")}
-					>
+					<button className="btn" onClick={() => toggleDropdown()}>
 						<FaUserCircle />
 						{user?.name}
 						<FaCaretDown />
 					</button>
-					<div className="dropdown show-dropdown">
+					<div
+						className={`dropdown ${isDropdownOpen ? "show-dropdown" : null}`}
+					>
 						<button
 							className="dropdown-btn"
-							onClick={() => console.log("logout user")}
+							onClick={() => console.log("logot")}
 						>
 							logout
 						</button>
