@@ -1,11 +1,8 @@
 import React from "react";
 import links from "../utils/links";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
-const NavLinks = ({ toggleSidebar }) => {
-	const dispatch = useDispatch();
-
+const NavLinks = ({ toggle }) => {
 	return (
 		<div className="nav-links">
 			{links.map((link) => {
@@ -18,7 +15,7 @@ const NavLinks = ({ toggleSidebar }) => {
 							return isActive ? "nav-link active" : "nav-link";
 						}}
 						key={id}
-						onClick={() => dispatch(toggleSidebar())}
+						onClick={toggle}
 					>
 						<span className="icon">{icon}</span>
 						{text}

@@ -10,23 +10,23 @@ const SmallSidebar = () => {
 	const { isSidebarOpen } = useSelector((store) => store.user);
 	const dispatch = useDispatch();
 
-	const toggle = () => {};
+	//create separate function to pass in NavLinks since we dont wanna close sidebar in big size
+	const toggle = () => {
+		dispatch(toggleSidebar());
+	};
 	return (
 		<Wrapper>
 			<div
 				className={`sidebar-container ${isSidebarOpen ? "show-sidebar" : null}`}
 			>
 				<div className="content">
-					<button
-						className="close-btn"
-						onClick={() => dispatch(toggleSidebar())}
-					>
+					<button className="close-btn" onClick={toggle}>
 						<FaTimes />
 					</button>
 					<header>
 						<Logo />
 					</header>
-					<NavLinks toggleSidebar={toggleSidebar} />
+					<NavLinks toggle={toggle} />
 				</div>
 			</div>
 		</Wrapper>
