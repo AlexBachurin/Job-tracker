@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Wrapper from "../assets/wrappers/Navbar/NavbarWrapper";
 import { FaAlignLeft, FaUserCircle, FaCaretDown } from "react-icons/fa";
-import { Logo } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser, toggleSidebar } from "../features/user/userSlice";
 const Navbar = () => {
