@@ -10,6 +10,8 @@ const initialState = {
 	isLoading: false,
 	// check if user already exists on app load
 	user: getUserFromLocalStorage(),
+	//sidebar
+	isSidebarOpen: false,
 };
 
 //register thunk
@@ -42,6 +44,11 @@ export const loginUser = createAsyncThunk(
 const userSlice = createSlice({
 	name: "user",
 	initialState,
+	reducers: {
+		toggleSidebar: (state) => {
+			state.isSidebarOpen = !state.isSidebarOpen;
+		},
+	},
 	// extraReducers
 	extraReducers: {
 		// pending state
@@ -82,4 +89,5 @@ const userSlice = createSlice({
 	},
 });
 
+export const { toggleSidebar } = userSlice.actions;
 export default userSlice.reducer;
