@@ -1,4 +1,11 @@
-import { LandingPage, ErrorPage, Dashboard, RegisterPage } from "./pages";
+import { LandingPage, ErrorPage, RegisterPage } from "./pages";
+import {
+	Profile,
+	AddJob,
+	AllJobs,
+	Stats,
+	SharedLayout,
+} from "./pages/Dashboard";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -7,7 +14,12 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path="/" element={<Dashboard />} />
+				<Route path="/" element={<SharedLayout />}>
+					<Route index path="stats" element={<Stats />} />
+					<Route path="all-jobs" element={<AllJobs />} />
+					<Route path="add-job" element={<AddJob />} />
+					<Route path="profile" element={<Profile />} />
+				</Route>
 				<Route path="landing" element={<LandingPage />} />
 				<Route path="register" element={<RegisterPage />} />
 				<Route path="*" element={<ErrorPage />} />
