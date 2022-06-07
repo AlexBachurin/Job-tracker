@@ -4,6 +4,7 @@ import customUrl from "../../utils/axios";
 import {
 	addUserToLocalStorage,
 	getUserFromLocalStorage,
+	removeUserFromLocalStorage,
 } from "../../utils/localStorage";
 
 const initialState = {
@@ -48,6 +49,12 @@ const userSlice = createSlice({
 		toggleSidebar: (state) => {
 			state.isSidebarOpen = !state.isSidebarOpen;
 		},
+		// logout
+		logoutUser: (state) => {
+			state.user = null;
+			state.isSidebarOpen = false;
+			removeUserFromLocalStorage();
+		},
 	},
 	// extraReducers
 	extraReducers: {
@@ -89,5 +96,5 @@ const userSlice = createSlice({
 	},
 });
 
-export const { toggleSidebar } = userSlice.actions;
+export const { toggleSidebar, logoutUser } = userSlice.actions;
 export default userSlice.reducer;
