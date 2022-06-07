@@ -4,12 +4,15 @@ import customUrl from "../../utils/axios";
 import {
 	addUserToLocalStorage,
 	getUserFromLocalStorage,
+	removeUserFromLocalStorage,
 } from "../../utils/localStorage";
 
 const initialState = {
 	isLoading: false,
 	// check if user already exists on app load
 	user: getUserFromLocalStorage(),
+	//sidebar
+	isSidebarOpen: false,
 };
 
 //register thunk
@@ -42,6 +45,17 @@ export const loginUser = createAsyncThunk(
 const userSlice = createSlice({
 	name: "user",
 	initialState,
+	reducers: {
+		toggleSidebar: (state) => {
+			state.isSidebarOpen = !state.isSidebarOpen;
+		},
+		// logout
+		logoutUser: (state) => {
+			state.user = null;
+			state.isSidebarOpen = false;
+			removeUserFromLocalStorage();
+		},
+	},
 	// extraReducers
 	extraReducers: {
 		// pending state
@@ -82,4 +96,5 @@ const userSlice = createSlice({
 	},
 });
 
+export const { toggleSidebar, logoutUser } = userSlice.actions;
 export default userSlice.reducer;
