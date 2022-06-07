@@ -9,7 +9,7 @@ const SharedLayout = () => {
 		<Wrapper>
 			<main className="dashboard">
 				<SmallSidebar />
-				{isSidebarOpen ? <BigSidebar /> : null}
+				<BigSidebar />
 				<div>
 					<Navbar />
 					<div className="dashboard-page">

@@ -17,7 +17,7 @@ const NavLinks = ({ toggleSidebar }) => {
 						className={({ isActive }) => {
 							return isActive ? "nav-link active" : "nav-link";
 						}}
-						id={id}
+						key={id}
 						onClick={() => dispatch(toggleSidebar())}
 					>
 						<span className="icon">{icon}</span>

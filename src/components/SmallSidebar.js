@@ -9,6 +9,8 @@ import NavLinks from "./NavLinks";
 const SmallSidebar = () => {
 	const { isSidebarOpen } = useSelector((store) => store.user);
 	const dispatch = useDispatch();
+
+	const toggle = () => {};
 	return (
 		<Wrapper>
 			<div
