@@ -10,7 +10,9 @@ const SmallSidebar = () => {
 	const dispatch = useDispatch();
 	return (
 		<Wrapper>
-			<div className="sidebar-container show-sidebar">
+			<div
+				className={`sidebar-container ${isSidebarOpen ? "show-sidebar" : null}`}
+			>
 				<div className="content">
 					<button
 						className="close-btn"
