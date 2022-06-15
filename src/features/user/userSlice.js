@@ -41,6 +41,24 @@ export const loginUser = createAsyncThunk(
 	}
 );
 
+//update user Thunk
+export const updateUser = createAsyncThunk(
+	"user/updateUser",
+	async (user, thunkApi) => {
+		try {
+			const resp = await customUrl.patch("/auth/updateUser", user, {
+				headers: {
+					authorization: `Bearer ${thunkApi.getState().user.user.token}`,
+				},
+			});
+			return resp.data;
+		} catch (error) {
+			console.log(error.response);
+			return thunkApi.rejectWithValue(error.response.data.msg);
+		}
+	}
+);
+
 //create slice
 const userSlice = createSlice({
 	name: "user",
@@ -58,7 +76,7 @@ const userSlice = createSlice({
 	},
 	// extraReducers
 	extraReducers: {
-		// pending state
+		// Register
 		[registerUser.pending]: (state) => {
 			state.isLoading = true;
 		},
@@ -90,6 +108,23 @@ const userSlice = createSlice({
 		},
 		//error
 		[loginUser.rejected]: (state, { payload }) => {
+			state.isLoading = false;
+			toast.error(payload);
+		},
+		// Update
+		[updateUser.pending]: (state) => {
+			state.isLoading = true;
+		},
+		//sucess
+		[updateUser.fulfilled]: (state, { payload }) => {
+			const { user } = payload;
+			state.isLoading = false;
+			state.user = user;
+			addUserToLocalStorage(user);
+			toast.success(`Changes successfully saved`);
+		},
+		//error
+		[updateUser.rejected]: (state, { payload }) => {
 			state.isLoading = false;
 			toast.error(payload);
 		},
