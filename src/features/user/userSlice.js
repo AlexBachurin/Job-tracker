@@ -6,6 +6,11 @@ import {
 	getUserFromLocalStorage,
 	removeUserFromLocalStorage,
 } from "../../utils/localStorage";
+import {
+	loginUserThunk,
+	registerUserThunk,
+	updateUserThunk,
+} from "./userThunk";
 
 const initialState = {
 	isLoading: false,
@@ -19,12 +24,7 @@ const initialState = {
 export const registerUser = createAsyncThunk(
 	"user/registerUser",
 	async (user, thunkApi) => {
-		try {
-			const resp = await customUrl.post("/auth/register", user);
-			return resp.data;
-		} catch (error) {
-			thunkApi.rejectWithValue(error.response.data.msg);
-		}
+		return registerUserThunk("/auth/register", user, thunkApi);
 	}
 );
 
@@ -32,12 +32,15 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
 	"user/loginUser",
 	async (user, thunkApi) => {
-		try {
-			const resp = await customUrl.post("/auth/login", user);
-			return resp.data;
-		} catch (error) {
-			return thunkApi.rejectWithValue(error.response.data.msg);
-		}
+		return loginUserThunk("/auth/login", user, thunkApi);
+	}
+);
+
+//update user Thunk
+export const updateUser = createAsyncThunk(
+	"user/updateUser",
+	async (user, thunkApi) => {
+		return updateUserThunk("/auth/updateUser", user, thunkApi);
 	}
 );
 
@@ -58,7 +61,7 @@ const userSlice = createSlice({
 	},
 	// extraReducers
 	extraReducers: {
-		// pending state
+		// Register
 		[registerUser.pending]: (state) => {
 			state.isLoading = true;
 		},
@@ -90,6 +93,23 @@ const userSlice = createSlice({
 		},
 		//error
 		[loginUser.rejected]: (state, { payload }) => {
+			state.isLoading = false;
+			toast.error(payload);
+		},
+		// Update
+		[updateUser.pending]: (state) => {
+			state.isLoading = true;
+		},
+		//sucess
+		[updateUser.fulfilled]: (state, { payload }) => {
+			const { user } = payload;
+			state.isLoading = false;
+			state.user = user;
+			addUserToLocalStorage(user);
+			toast.success(`Changes successfully saved`);
+		},
+		//error
+		[updateUser.rejected]: (state, { payload }) => {
 			state.isLoading = false;
 			toast.error(payload);
 		},
