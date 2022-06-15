@@ -6,6 +6,11 @@ import {
 	getUserFromLocalStorage,
 	removeUserFromLocalStorage,
 } from "../../utils/localStorage";
+import {
+	loginUserThunk,
+	registerUserThunk,
+	updateUserThunk,
+} from "./userThunk";
 
 const initialState = {
 	isLoading: false,
@@ -19,12 +24,7 @@ const initialState = {
 export const registerUser = createAsyncThunk(
 	"user/registerUser",
 	async (user, thunkApi) => {
-		try {
-			const resp = await customUrl.post("/auth/register", user);
-			return resp.data;
-		} catch (error) {
-			return thunkApi.rejectWithValue(error.response.data.msg);
-		}
+		return registerUserThunk("/auth/register", user, thunkApi);
 	}
 );
 
@@ -32,12 +32,7 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
 	"user/loginUser",
 	async (user, thunkApi) => {
-		try {
-			const resp = await customUrl.post("/auth/login", user);
-			return resp.data;
-		} catch (error) {
-			return thunkApi.rejectWithValue(error.response.data.msg);
-		}
+		return loginUserThunk("/auth/login", user, thunkApi);
 	}
 );
 
@@ -45,23 +40,7 @@ export const loginUser = createAsyncThunk(
 export const updateUser = createAsyncThunk(
 	"user/updateUser",
 	async (user, thunkApi) => {
-		try {
-			const resp = await customUrl.patch("/auth/updateUser", user, {
-				headers: {
-					authorization: `Bearer ${thunkApi.getState().user.user.token}`,
-					// authorization: `Bearer `,
-				},
-			});
-			return resp.data;
-		} catch (error) {
-			console.log(error.response);
-			//if something wrong with authentication then logout user immediately
-			if (error.response.status === 401) {
-				thunkApi.dispatch(logoutUser());
-				return thunkApi.rejectWithValue(error.response.data.msg);
-			}
-			return thunkApi.rejectWithValue(error.response.data.msg);
-		}
+		return updateUserThunk("/auth/updateUser", user, thunkApi);
 	}
 );
 
