@@ -3,6 +3,8 @@ import { FormRow } from "../../components";
 import Wrapper from "../../assets/wrappers/DashboardForm/DashboardForm";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import FormRowSelect from "../../components/FormRowSelect";
+import { handleChange } from "../../features/job/jobSlice";
 const AddJob = () => {
 	const {
 		isLoading,
@@ -16,6 +18,7 @@ const AddJob = () => {
 		isEditing,
 		editJobId,
 	} = useSelector((store) => store.job);
+	const dispatch = useDispatch();
 	//submit
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -29,7 +32,8 @@ const AddJob = () => {
 	const handleJobInput = (e) => {
 		const name = e.target.name;
 		const value = e.target.value;
-		console.log(name, value);
+		// console.log(name, value);
+		dispatch(handleChange({ name, value }));
 	};
 
 	return (
@@ -61,6 +65,23 @@ const AddJob = () => {
 						value={jobLocation}
 						handleChange={handleJobInput}
 					/>
+					{/* status */}
+					<FormRowSelect
+						labelText="status"
+						value={defaultStatus}
+						name="defaultStatus"
+						list={statusOptions}
+						handleChange={handleJobInput}
+					/>
+					{/* job type */}
+					<FormRowSelect
+						labelText="job type"
+						value={defaultJobType}
+						name="defaultJobType"
+						list={jobTypeOptions}
+						handleChange={handleJobInput}
+					/>
+					{/* buttons */}
 					<div className="btn-container">
 						<button
 							className="btn btn-block clear-btn"
