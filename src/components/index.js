@@ -8,6 +8,7 @@ import Navbar from "./Navbar";
 import JobsContainer from "./JobsContainer";
 import SearchContainer from "./SearchContainer";
 import Job from "./Job";
+import JobInfo from "./JobInfo";
 export {
 	Logo,
 	FormRow,
@@ -19,4 +20,5 @@ export {
 	JobsContainer,
 	SearchContainer,
 	Job,
+	JobInfo,
 };
