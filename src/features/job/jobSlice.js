@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { customUrl } from "../../utils/axios";
+import { toast } from "react-toastify";
+import customUrl from "../../utils/axios";
 import { getUserFromLocalStorage } from "../../utils/localStorage";
+import { logoutUser } from "../user/userSlice";
 
 const initialState = {
 	isLoading: false,
@@ -8,12 +10,33 @@ const initialState = {
 	company: "",
 	jobLocation: "",
 	jobTypeOptions: ["full-time", "part-time", "remote", "internship"],
-	defaultJobType: "full-time",
+	jobType: "full-time",
 	statusOptions: ["interview", "declined", "pending"],
-	defaultStatus: "pending",
+	status: "pending",
 	isEditing: false,
 	editJobId: "",
 };
+//create job thunk
+export const createJob = createAsyncThunk(
+	"job/createJob",
+	async (job, thunkApi) => {
+		try {
+			const resp = await customUrl.post("/jobs", job, {
+				headers: {
+					authorization: `Bearer ${thunkApi.getState().user.user.token}`,
+				},
+			});
+			thunkApi.dispatch(clearValues());
+			return resp.data;
+		} catch (error) {
+			if (error.response.status === 401) {
+				thunkApi.dispatch(logoutUser());
+				return thunkApi.rejectWithValue(error.response.data.msg);
+			}
+			return thunkApi.rejectWithValue(error.response.data.msg);
+		}
+	}
+);
 
 const jobSlice = createSlice({
 	name: "job",
@@ -27,6 +50,19 @@ const jobSlice = createSlice({
 		//clear values
 		clearValues: () => {
 			return { ...initialState };
+		},
+	},
+	extraReducers: {
+		[createJob.pending]: (state) => {
+			state.isLoading = true;
+		},
+		[createJob.fulfilled]: (state) => {
+			state.isLoading = false;
+			toast.success("Job created");
+		},
+		[createJob.rejected]: (state, action) => {
+			state.isLoading = false;
+			toast.error(action.payload);
 		},
 	},
 });

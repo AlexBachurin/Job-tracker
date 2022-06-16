@@ -4,16 +4,20 @@ import Wrapper from "../../assets/wrappers/DashboardForm/DashboardForm";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import FormRowSelect from "../../components/FormRowSelect";
-import { clearValues, handleChange } from "../../features/job/jobSlice";
+import {
+	clearValues,
+	createJob,
+	handleChange,
+} from "../../features/job/jobSlice";
 const AddJob = () => {
 	const {
 		isLoading,
 		position,
 		company,
 		jobLocation,
-		defaultJobType,
+		jobType,
 		jobTypeOptions,
-		defaultStatus,
+		status,
 		statusOptions,
 		isEditing,
 		editJobId,
@@ -27,6 +31,7 @@ const AddJob = () => {
 			toast.error("Please fill all fields");
 			return;
 		}
+		dispatch(createJob({ position, company, jobLocation, jobType, status }));
 	};
 	//handle input
 	const handleJobInput = (e) => {
@@ -73,16 +78,16 @@ const AddJob = () => {
 					{/* status */}
 					<FormRowSelect
 						labelText="status"
-						value={defaultStatus}
-						name="defaultStatus"
+						value={status}
+						name="status"
 						list={statusOptions}
 						handleChange={handleJobInput}
 					/>
 					{/* job type */}
 					<FormRowSelect
 						labelText="job type"
-						value={defaultJobType}
-						name="defaultJobType"
+						value={jobType}
+						name="jobType"
 						list={jobTypeOptions}
 						handleChange={handleJobInput}
 					/>
