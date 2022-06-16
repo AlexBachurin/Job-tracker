@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FormRow } from "../../components";
 import Wrapper from "../../assets/wrappers/DashboardForm/DashboardForm";
 import { useSelector, useDispatch } from "react-redux";
@@ -23,6 +23,7 @@ const AddJob = () => {
 		editJobId,
 	} = useSelector((store) => store.job);
 	const dispatch = useDispatch();
+	const { user } = useSelector((store) => store.user);
 	//submit
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -46,6 +47,10 @@ const AddJob = () => {
 		dispatch(clearValues());
 	};
 
+	//add location of user automatically on opening page(optional)
+	useEffect(() => {
+		dispatch(handleChange({ name: "jobLocation", value: user.location }));
+	}, []);
 	return (
 		<Wrapper>
 			<form className="form">
