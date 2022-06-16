@@ -15,6 +15,9 @@ const initialState = {
 	editJobId: "",
 };
 
-const jobSlice = createSlice({});
+const jobSlice = createSlice({
+	name: "job",
+	initialState,
+});
 
 export default jobSlice.reducer;
