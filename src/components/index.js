@@ -5,4 +5,18 @@ import Register from "./Register";
 import BigSidebar from "./BigSidebar";
 import SmallSidebar from "./SmallSidebar";
 import Navbar from "./Navbar";
-export { Logo, FormRow, Login, Register, BigSidebar, SmallSidebar, Navbar };
+import JobsContainer from "./JobsContainer";
+import SearchContainer from "./SearchContainer";
+import Job from "./Job";
+export {
+	Logo,
+	FormRow,
+	Login,
+	Register,
+	BigSidebar,
+	SmallSidebar,
+	Navbar,
+	JobsContainer,
+	SearchContainer,
+	Job,
+};
