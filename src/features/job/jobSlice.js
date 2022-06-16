@@ -49,7 +49,11 @@ const jobSlice = createSlice({
 		},
 		//clear values
 		clearValues: () => {
-			return { ...initialState };
+			//if we clear values we want to still save user location so using spread and set location from local storage
+			return {
+				...initialState,
+				jobLocation: getUserFromLocalStorage()?.location,
+			};
 		},
 	},
 	extraReducers: {
