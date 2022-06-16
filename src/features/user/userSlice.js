@@ -52,10 +52,14 @@ const userSlice = createSlice({
 			state.isSidebarOpen = !state.isSidebarOpen;
 		},
 		// logout
-		logoutUser: (state) => {
+		logoutUser: (state, action) => {
 			state.user = null;
 			state.isSidebarOpen = false;
 			removeUserFromLocalStorage();
+			//if we have some message in payload then show toast, if not just logout
+			if (action.payload) {
+				toast.success(action.payload);
+			}
 		},
 	},
 	// extraReducers
