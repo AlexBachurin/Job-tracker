@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Wrapper from "../assets/wrappers/Job/JobWrapper";
 import JobInfo from "./JobInfo";
 import moment from "moment";
+import { deleteJob } from "../features/job/jobSlice";
 const Job = ({
 	_id,
 	position,
@@ -16,6 +17,10 @@ const Job = ({
 }) => {
 	const dispatch = useDispatch();
 	const date = moment(createdAt).format("MMM Do, YYYY");
+	//delete job
+	const handleDeleteJob = () => {
+		dispatch(deleteJob(_id));
+	};
 	return (
 		<Wrapper>
 			<header>
@@ -45,7 +50,7 @@ const Job = ({
 						<button
 							type="button"
 							className="btn delete-btn"
-							onClick={() => console.log("delete")}
+							onClick={handleDeleteJob}
 						>
 							delete
 						</button>
