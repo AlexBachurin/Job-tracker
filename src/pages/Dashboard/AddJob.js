@@ -7,6 +7,7 @@ import FormRowSelect from "../../components/FormRowSelect";
 import {
 	clearValues,
 	createJob,
+	editJob,
 	handleChange,
 } from "../../features/job/jobSlice";
 const AddJob = () => {
@@ -24,12 +25,22 @@ const AddJob = () => {
 	} = useSelector((store) => store.job);
 	const dispatch = useDispatch();
 	const { user } = useSelector((store) => store.user);
+
 	//submit
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
 		if (!position || !company || !jobLocation) {
 			toast.error("Please fill all fields");
+			return;
+		}
+		if (isEditing) {
+			dispatch(
+				editJob({
+					jobId: editJobId,
+					job: { position, company, jobLocation, jobType, status },
+				})
+			);
 			return;
 		}
 		dispatch(createJob({ position, company, jobLocation, jobType, status }));
@@ -114,7 +125,7 @@ const AddJob = () => {
 							onClick={handleSubmit}
 							disabled={isLoading}
 						>
-							submit
+							{isEditing ? "edit" : "submit"}
 						</button>
 					</div>
 				</div>

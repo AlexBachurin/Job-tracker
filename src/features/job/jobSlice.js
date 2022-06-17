@@ -4,6 +4,7 @@ import customUrl from "../../utils/axios";
 import { getUserFromLocalStorage } from "../../utils/localStorage";
 import { logoutUser } from "../user/userSlice";
 import { showLoading, hideLoading, getAllJobs } from "../allJobs/allJobsSlice";
+
 const initialState = {
 	isLoading: false,
 	position: "",
@@ -62,7 +63,23 @@ export const deleteJob = createAsyncThunk(
 		}
 	}
 );
-
+// EDIT JOB
+export const editJob = createAsyncThunk(
+	"job/editJob",
+	async ({ jobId, job }, thunkApi) => {
+		try {
+			const resp = await customUrl.patch(`jobs/${jobId}`, job, {
+				headers: {
+					authorization: `Bearer ${thunkApi.getState().user.user.token}`,
+				},
+			});
+			thunkApi.dispatch(clearValues());
+			return resp.data;
+		} catch (error) {
+			return thunkApi.rejectWithValue(error.response.msg);
+		}
+	}
+);
 const jobSlice = createSlice({
 	name: "job",
 	initialState,
@@ -102,6 +119,19 @@ const jobSlice = createSlice({
 			toast.success(action.payload);
 		},
 		[deleteJob.rejected]: (state, action) => {
+			toast.error(action.payload);
+		},
+		[editJob.pending]: (state) => {
+			state.isLoading = true;
+		},
+		[editJob.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			// state.isEditing = false;
+			toast.success("Job info updated");
+		},
+		[editJob.rejected]: (state, action) => {
+			state.isLoading = false;
+			// state.isEditing = false;
 			toast.error(action.payload);
 		},
 	},
