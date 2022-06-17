@@ -49,7 +49,10 @@ const AddJob = () => {
 
 	//add location of user automatically on opening page(optional)
 	useEffect(() => {
-		dispatch(handleChange({ name: "jobLocation", value: user.location }));
+		//only add default location if we not editing
+		if (!isEditing) {
+			dispatch(handleChange({ name: "jobLocation", value: user.location }));
+		}
 	}, []);
 	return (
 		<Wrapper>
