@@ -13,6 +13,7 @@ const JobsContainer = () => {
 	//get all jobs from server on page load
 	useEffect(() => {
 		dispatch(getAllJobs());
+		//eslint-disable-next-line
 	}, []);
 
 	//if loading show spinner

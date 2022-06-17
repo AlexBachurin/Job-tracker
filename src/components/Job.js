@@ -14,9 +14,10 @@ const Job = ({
 	jobType,
 	createdAt,
 	status,
+	updatedAt,
 }) => {
 	const dispatch = useDispatch();
-	const date = moment(createdAt).format("MMM Do, YYYY");
+	const date = moment(updatedAt).format("MMM Do, YYYY");
 	//delete job
 	const handleDeleteJob = () => {
 		dispatch(deleteJob(_id));
