@@ -1,5 +1,7 @@
 import React from "react";
+
 import { FormRow } from "../components";
+import DemoButton from "./DemoButton";
 
 const Login = ({ values, handleChange, changeMember, isLoading }) => {
 	return (
@@ -24,6 +26,7 @@ const Login = ({ values, handleChange, changeMember, isLoading }) => {
 			<button className="btn btn-block" type="submit" disabled={isLoading}>
 				{isLoading ? "Loading..." : "Submit"}
 			</button>
+			<DemoButton isLoading={isLoading} />
 			<div>
 				<p>
 					Not a member yet?
