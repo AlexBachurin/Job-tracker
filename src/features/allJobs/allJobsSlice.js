@@ -39,6 +39,24 @@ export const getAllJobs = createAsyncThunk(
 	}
 );
 
+//get stats thunk
+export const getStats = createAsyncThunk(
+	"allJobs/getStats",
+	async (_, thunkApi) => {
+		try {
+			const resp = await customUrl.get("/jobs/stats", {
+				headers: {
+					authorization: `Bearer ${thunkApi.getState().user.user.token}`,
+				},
+			});
+			console.log(resp.data);
+			return resp.data;
+		} catch (error) {
+			return thunkApi.rejectWithValue(error.response.data.msg);
+		}
+	}
+);
+
 const allJobsSlice = createSlice({
 	name: "allJobs",
 	initialState,
@@ -62,6 +80,19 @@ const allJobsSlice = createSlice({
 			state.totalJobs = totalJobs;
 		},
 		[getAllJobs.rejected]: (state, action) => {
+			state.isLoading = false;
+			toast.error(action.payload);
+		},
+		// get stats
+		[getStats.pending]: (state) => {
+			state.isLoading = true;
+		},
+		[getStats.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			state.stats = action.payload.defaultStats;
+			state.monthlyApplications = action.payload.monthlyApplications;
+		},
+		[getStats.rejected]: (state, action) => {
 			state.isLoading = false;
 			toast.error(action.payload);
 		},
