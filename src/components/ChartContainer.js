@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import Wrapper from "../assets/wrappers/ChartsContainer/ChartsContainerWrapper";
-import { BarChart, AreaChart } from "../components";
+import { BarChartComponent, AreaChartComponent } from "../components";
 const ChartContainer = () => {
 	const { monthlyApplications } = useSelector((store) => store.allJobs);
 	const [barChart, setBarChart] = useState(true);
@@ -13,9 +13,9 @@ const ChartContainer = () => {
 				{barChart ? "Area Chart" : "Bar Chart"}
 			</button>
 			{barChart ? (
-				<BarChart data={monthlyApplications} />
+				<BarChartComponent data={monthlyApplications} />
 			) : (
-				<AreaChart data={monthlyApplications} />
+				<AreaChartComponent data={monthlyApplications} />
 			)}
 		</Wrapper>
 	);

@@ -10,8 +10,8 @@ import SearchContainer from "./SearchContainer";
 import Job from "./Job";
 import JobInfo from "./JobInfo";
 import ChartContainer from "./ChartContainer";
-import BarChart from "./BarChart";
-import AreaChart from "./AreaChart";
+import BarChartComponent from "./BarChartComponent";
+import AreaChartComponent from "./AreaChartComponent";
 export {
 	Logo,
 	FormRow,
@@ -25,6 +25,6 @@ export {
 	Job,
 	JobInfo,
 	ChartContainer,
-	BarChart,
-	AreaChart,
+	BarChartComponent,
+	AreaChartComponent,
 };
