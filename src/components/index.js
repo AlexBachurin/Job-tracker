@@ -9,6 +9,9 @@ import JobsContainer from "./JobsContainer";
 import SearchContainer from "./SearchContainer";
 import Job from "./Job";
 import JobInfo from "./JobInfo";
+import ChartContainer from "./ChartContainer";
+import BarChart from "./BarChart";
+import AreaChart from "./AreaChart";
 export {
 	Logo,
 	FormRow,
@@ -21,4 +24,7 @@ export {
 	SearchContainer,
 	Job,
 	JobInfo,
+	ChartContainer,
+	BarChart,
+	AreaChart,
 };
