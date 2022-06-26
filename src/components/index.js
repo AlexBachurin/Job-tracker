@@ -13,6 +13,7 @@ import ChartContainer from "./ChartContainer";
 import BarChartComponent from "./BarChartComponent";
 import AreaChartComponent from "./AreaChartComponent";
 import FormRowSelect from "./FormRowSelect";
+import PageBtnContainer from "./PageBtnContainer";
 export {
 	Logo,
 	FormRow,
@@ -29,4 +30,5 @@ export {
 	ChartContainer,
 	BarChartComponent,
 	AreaChartComponent,
+	PageBtnContainer,
 };
