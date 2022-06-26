@@ -12,9 +12,11 @@ import JobInfo from "./JobInfo";
 import ChartContainer from "./ChartContainer";
 import BarChartComponent from "./BarChartComponent";
 import AreaChartComponent from "./AreaChartComponent";
+import FormRowSelect from "./FormRowSelect";
 export {
 	Logo,
 	FormRow,
+	FormRowSelect,
 	Login,
 	Register,
 	BigSidebar,
