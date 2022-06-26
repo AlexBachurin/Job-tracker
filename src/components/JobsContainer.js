@@ -28,7 +28,6 @@ const JobsContainer = () => {
 		<Wrapper>
 			<div className="jobs">
 				{jobs.map((item) => {
-					console.log(item);
 					return <Job key={item._id} {...item} />;
 				})}
 			</div>
