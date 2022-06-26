@@ -28,12 +28,10 @@ const PageBtnContainer = () => {
 
 	//next page
 	const nextPage = () => {
-		console.log("next page");
 		dispatch(nextPageHandler());
 	};
 	//prev page
 	const prevPage = () => {
-		console.log("prev page");
 		dispatch(prevPageHandler());
 	};
 

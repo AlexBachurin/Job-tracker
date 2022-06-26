@@ -8,16 +8,25 @@ import { getAllJobs } from "../features/allJobs/allJobsSlice";
 import PageBtnContainer from "./PageBtnContainer";
 
 const JobsContainer = () => {
-	const { jobs, isLoading, page, totalJobs, numOfPages } = useSelector(
-		(store) => store.allJobs
-	);
+	const {
+		jobs,
+		isLoading,
+		page,
+		totalJobs,
+		numOfPages,
+		search,
+		searchStatus,
+		searchType,
+		sort,
+	} = useSelector((store) => store.allJobs);
 	const dispatch = useDispatch();
 
 	//get all jobs from server on page load
 	useEffect(() => {
 		dispatch(getAllJobs());
+		// trigger all jobs dispatch every time we change something in search form
 		//eslint-disable-next-line
-	}, []);
+	}, [page, search, searchType, searchStatus, sort]);
 
 	//if loading show spinner
 	if (isLoading) {
