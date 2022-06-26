@@ -3,6 +3,7 @@ import Wrapper from "../assets/wrappers/PageBtnContainer/PageBtnContainerWrapper
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
 import { useSelector, useDispatch } from "react-redux";
 import {
+	changePageHandler,
 	nextPageHandler,
 	prevPageHandler,
 } from "../features/allJobs/allJobsSlice";
@@ -17,7 +18,12 @@ const PageBtnContainer = () => {
 	});
 	//change page on click
 	const handlePage = (e) => {
-		console.log(`change page to ${e.target.value}`);
+		//get number of clicked page by its text content / transform to number and put in payload
+		const num = Number(e.target.textContent);
+		//dispatch only if we changing page and not on active page
+		if (num !== page) {
+			dispatch(changePageHandler(num));
+		}
 	};
 
 	//next page

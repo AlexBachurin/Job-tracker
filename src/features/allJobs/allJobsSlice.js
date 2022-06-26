@@ -92,7 +92,10 @@ const allJobsSlice = createSlice({
 				state.page = state.page - 1;
 			}
 		},
-		// change page on click
+		// change page on click in payload we get number of page
+		changePageHandler: (state, { payload }) => {
+			state.page = payload;
+		},
 	},
 	extraReducers: {
 		[getAllJobs.pending]: (state) => {
@@ -132,5 +135,6 @@ export const {
 	clearFilters,
 	nextPageHandler,
 	prevPageHandler,
+	changePageHandler,
 } = allJobsSlice.actions;
 export default allJobsSlice.reducer;
