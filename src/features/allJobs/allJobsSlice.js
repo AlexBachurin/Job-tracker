@@ -76,6 +76,23 @@ const allJobsSlice = createSlice({
 		clearFilters: () => {
 			return { ...initialState };
 		},
+		//next page
+		nextPageHandler: (state) => {
+			if (state.page >= state.numOfPages) {
+				state.page = 1;
+			} else {
+				state.page = state.page + 1;
+			}
+		},
+		// prev page
+		prevPageHandler: (state) => {
+			if (state.page <= 1) {
+				state.page = state.numOfPages;
+			} else {
+				state.page = state.page - 1;
+			}
+		},
+		// change page on click
 	},
 	extraReducers: {
 		[getAllJobs.pending]: (state) => {
@@ -108,6 +125,12 @@ const allJobsSlice = createSlice({
 	},
 });
 
-export const { showLoading, hideLoading, handleSearchChange, clearFilters } =
-	allJobsSlice.actions;
+export const {
+	showLoading,
+	hideLoading,
+	handleSearchChange,
+	clearFilters,
+	nextPageHandler,
+	prevPageHandler,
+} = allJobsSlice.actions;
 export default allJobsSlice.reducer;

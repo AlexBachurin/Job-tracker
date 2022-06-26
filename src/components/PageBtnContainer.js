@@ -2,6 +2,10 @@ import React from "react";
 import Wrapper from "../assets/wrappers/PageBtnContainer/PageBtnContainerWrapper";
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
 import { useSelector, useDispatch } from "react-redux";
+import {
+	nextPageHandler,
+	prevPageHandler,
+} from "../features/allJobs/allJobsSlice";
 const PageBtnContainer = () => {
 	const { numOfPages, page } = useSelector((store) => store.allJobs);
 	const dispatch = useDispatch();
@@ -19,10 +23,12 @@ const PageBtnContainer = () => {
 	//next page
 	const nextPage = () => {
 		console.log("next page");
+		dispatch(nextPageHandler());
 	};
 	//prev page
 	const prevPage = () => {
 		console.log("prev page");
+		dispatch(prevPageHandler());
 	};
 
 	return (
