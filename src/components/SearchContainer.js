@@ -15,13 +15,13 @@ const SearchContainer = () => {
 	const handleSearch = (e) => {
 		const name = e.target.name;
 		const value = e.target.value;
-		console.log(name, value);
+		//if too many request when typing fix we can use this line
+		// if (isLoading) return;
 		dispatch(handleSearchChange({ name, value }));
 	};
 	//submit
 	const submitFormClear = (e) => {
 		e.preventDefault();
-		console.log("clear filters");
 		dispatch(clearFilters());
 	};
 	return (
