@@ -1,6 +1,7 @@
 import customUrl from "../../utils/axios";
 import { logoutUser } from "./userSlice";
-
+import { clearAllJobsState } from "../allJobs/allJobsSlice";
+import { clearValues } from "../job/jobSlice";
 export const registerUserThunk = async (url, user, thunkApi) => {
 	try {
 		const resp = await customUrl.post(url, user);
@@ -36,5 +37,22 @@ export const updateUserThunk = async (url, user, thunkApi) => {
 			return thunkApi.rejectWithValue(error.response.data.msg);
 		}
 		return thunkApi.rejectWithValue(error.response.data.msg);
+	}
+};
+
+//clear all store
+export const clearStoreThunk = async (message, thunkApi) => {
+	try {
+		//logout user
+		thunkApi.dispatch(logoutUser(message));
+		//clear all jobs store
+		thunkApi.dispatch(clearAllJobsState());
+		//clear job values
+		thunkApi.dispatch(clearValues());
+		//return promise resolve
+		return Promise.resolve();
+		//if error promise reject
+	} catch (error) {
+		return Promise.reject();
 	}
 };
