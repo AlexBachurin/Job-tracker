@@ -77,6 +77,9 @@ const allJobsSlice = createSlice({
 		//search handle
 		handleSearchChange: (state, { payload }) => {
 			const { name, value } = payload;
+			//change page to 1 to avoid bugs(if we on page 8 and type something in search
+			// that return only 2 pages jobs will not be displayed)
+			state.page = 1;
 			state[name] = value;
 		},
 		//clear filters
