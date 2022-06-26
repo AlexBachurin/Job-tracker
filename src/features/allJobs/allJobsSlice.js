@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import customUrl from "../../utils/axios";
+import { getAllJobsThunk, getStatsThunk } from "./allJobsThunk";
 
 const initialFiltersState = {
 	search: "",
@@ -22,47 +23,10 @@ const initialState = {
 };
 
 //get all jobs thunk
-export const getAllJobs = createAsyncThunk(
-	"allJobs/getJobs",
-	async (_, thunkApi) => {
-		const { page, search, searchStatus, searchType, sort } =
-			thunkApi.getState().allJobs;
-		// create custom url with query params for server request
-		let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`;
-		//check if we have something in search, then add search query param to url
-		if (search) {
-			url += `&search=${search}`;
-		}
-		try {
-			const resp = await customUrl.get(url, {
-				headers: {
-					authorization: `Bearer ${thunkApi.getState().user.user.token}`,
-				},
-			});
-			return resp.data;
-		} catch (error) {
-			return thunkApi.rejectWithValue(error.response.data.msg);
-		}
-	}
-);
+export const getAllJobs = createAsyncThunk("allJobs/getJobs", getAllJobsThunk);
 
 //get stats thunk
-export const getStats = createAsyncThunk(
-	"allJobs/getStats",
-	async (_, thunkApi) => {
-		try {
-			const resp = await customUrl.get("/jobs/stats", {
-				headers: {
-					authorization: `Bearer ${thunkApi.getState().user.user.token}`,
-				},
-			});
-			console.log(resp.data);
-			return resp.data;
-		} catch (error) {
-			return thunkApi.rejectWithValue(error.response.data.msg);
-		}
-	}
-);
+export const getStats = createAsyncThunk("allJobs/getStats", getStatsThunk);
 
 const allJobsSlice = createSlice({
 	name: "allJobs",
