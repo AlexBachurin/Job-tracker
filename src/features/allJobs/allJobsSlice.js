@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import customUrl from "../../utils/axios";
+import { getAllJobsThunk, getStatsThunk } from "./allJobsThunk";
 
 const initialFiltersState = {
 	search: "",
@@ -22,40 +22,10 @@ const initialState = {
 };
 
 //get all jobs thunk
-export const getAllJobs = createAsyncThunk(
-	"allJobs/getJobs",
-	async (_, thunkApi) => {
-		let url = `/jobs`;
-		try {
-			const resp = await customUrl.get(url, {
-				headers: {
-					authorization: `Bearer ${thunkApi.getState().user.user.token}`,
-				},
-			});
-			return resp.data;
-		} catch (error) {
-			return thunkApi.rejectWithValue(error.response.data.msg);
-		}
-	}
-);
+export const getAllJobs = createAsyncThunk("allJobs/getJobs", getAllJobsThunk);
 
 //get stats thunk
-export const getStats = createAsyncThunk(
-	"allJobs/getStats",
-	async (_, thunkApi) => {
-		try {
-			const resp = await customUrl.get("/jobs/stats", {
-				headers: {
-					authorization: `Bearer ${thunkApi.getState().user.user.token}`,
-				},
-			});
-			console.log(resp.data);
-			return resp.data;
-		} catch (error) {
-			return thunkApi.rejectWithValue(error.response.data.msg);
-		}
-	}
-);
+export const getStats = createAsyncThunk("allJobs/getStats", getStatsThunk);
 
 const allJobsSlice = createSlice({
 	name: "allJobs",
@@ -66,6 +36,42 @@ const allJobsSlice = createSlice({
 		},
 		hideLoading: (state) => {
 			state.isLoading = false;
+		},
+		//search handle
+		handleSearchChange: (state, { payload }) => {
+			const { name, value } = payload;
+			//change page to 1 to avoid bugs(if we on page 8 and type something in search
+			// that return only 2 pages jobs will not be displayed)
+			state.page = 1;
+			state[name] = value;
+		},
+		//clear filters
+		clearFilters: () => {
+			return { ...initialState };
+		},
+		//next page
+		nextPageHandler: (state) => {
+			if (state.page >= state.numOfPages) {
+				state.page = 1;
+			} else {
+				state.page = state.page + 1;
+			}
+		},
+		// prev page
+		prevPageHandler: (state) => {
+			if (state.page <= 1) {
+				state.page = state.numOfPages;
+			} else {
+				state.page = state.page - 1;
+			}
+		},
+		// change page on click in payload we get number of page
+		changePageHandler: (state, { payload }) => {
+			state.page = payload;
+		},
+		//clear allJobsState
+		clearAllJobsState: () => {
+			return { ...initialState };
 		},
 	},
 	extraReducers: {
@@ -99,5 +105,14 @@ const allJobsSlice = createSlice({
 	},
 });
 
-export const { showLoading, hideLoading } = allJobsSlice.actions;
+export const {
+	showLoading,
+	hideLoading,
+	handleSearchChange,
+	clearFilters,
+	nextPageHandler,
+	prevPageHandler,
+	changePageHandler,
+	clearAllJobsState,
+} = allJobsSlice.actions;
 export default allJobsSlice.reducer;
