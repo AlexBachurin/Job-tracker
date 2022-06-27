@@ -2,12 +2,14 @@ import customUrl from "../../utils/axios";
 import { logoutUser } from "./userSlice";
 import { clearAllJobsState } from "../allJobs/allJobsSlice";
 import { clearValues } from "../job/jobSlice";
+import { checkForUnauthorizedResponse } from "../../utils/axios";
+
 export const registerUserThunk = async (url, user, thunkApi) => {
 	try {
 		const resp = await customUrl.post(url, user);
 		return resp.data;
 	} catch (error) {
-		return thunkApi.rejectWithValue(error.response.data.msg);
+		return checkForUnauthorizedResponse(error);
 	}
 };
 
@@ -16,7 +18,7 @@ export const loginUserThunk = async (url, user, thunkApi) => {
 		const resp = await customUrl.post(url, user);
 		return resp.data;
 	} catch (error) {
-		return thunkApi.rejectWithValue(error.response.data.msg);
+		return checkForUnauthorizedResponse(error);
 	}
 };
 
@@ -26,11 +28,7 @@ export const updateUserThunk = async (url, user, thunkApi) => {
 		return resp.data;
 	} catch (error) {
 		//if something wrong with authentication then logout user immediately
-		if (error.response.status === 401) {
-			thunkApi.dispatch(logoutUser());
-			return thunkApi.rejectWithValue(error.response.data.msg);
-		}
-		return thunkApi.rejectWithValue(error.response.data.msg);
+		return checkForUnauthorizedResponse(error);
 	}
 };
 
