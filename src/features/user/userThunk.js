@@ -22,15 +22,9 @@ export const loginUserThunk = async (url, user, thunkApi) => {
 
 export const updateUserThunk = async (url, user, thunkApi) => {
 	try {
-		const resp = await customUrl.patch(url, user, {
-			headers: {
-				authorization: `Bearer ${thunkApi.getState().user.user.token}`,
-				// authorization: `Bearer `,
-			},
-		});
+		const resp = await customUrl.patch(url, user);
 		return resp.data;
 	} catch (error) {
-		console.log(error.response);
 		//if something wrong with authentication then logout user immediately
 		if (error.response.status === 401) {
 			thunkApi.dispatch(logoutUser());

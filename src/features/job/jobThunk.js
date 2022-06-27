@@ -5,11 +5,7 @@ import { logoutUser } from "../user/userSlice";
 
 export const createJobThunk = async (job, thunkApi) => {
 	try {
-		const resp = await customUrl.post("/jobs", job, {
-			headers: {
-				authorization: `Bearer ${thunkApi.getState().user.user.token}`,
-			},
-		});
+		const resp = await customUrl.post("/jobs", job);
 		thunkApi.dispatch(clearValues());
 		return resp.data;
 	} catch (error) {
@@ -26,11 +22,7 @@ export const deleteJobThunk = async (jobId, thunkApi) => {
 	thunkApi.dispatch(showLoading());
 	console.log(jobId);
 	try {
-		const resp = await customUrl.delete(`/jobs/${jobId}`, {
-			headers: {
-				authorization: `Bearer ${thunkApi.getState().user.user.token}`,
-			},
-		});
+		const resp = await customUrl.delete(`/jobs/${jobId}`);
 		console.log(resp.data);
 		//trigger jobs renew by using getAllJobs method from AllJobs slice
 		//loading will automatically be handled in getAllJobs extrareducers
@@ -45,11 +37,7 @@ export const deleteJobThunk = async (jobId, thunkApi) => {
 
 export const editJobThunk = async ({ jobId, job }, thunkApi) => {
 	try {
-		const resp = await customUrl.patch(`jobs/${jobId}`, job, {
-			headers: {
-				authorization: `Bearer ${thunkApi.getState().user.user.token}`,
-			},
-		});
+		const resp = await customUrl.patch(`jobs/${jobId}`, job);
 		thunkApi.dispatch(clearValues());
 		return resp.data;
 	} catch (error) {

@@ -10,11 +10,7 @@ export const getAllJobsThunk = async (_, thunkApi) => {
 		url += `&search=${search}`;
 	}
 	try {
-		const resp = await customUrl.get(url, {
-			headers: {
-				authorization: `Bearer ${thunkApi.getState().user.user.token}`,
-			},
-		});
+		const resp = await customUrl.get(url);
 		return resp.data;
 	} catch (error) {
 		return thunkApi.rejectWithValue(error.response.data.msg);
@@ -23,12 +19,7 @@ export const getAllJobsThunk = async (_, thunkApi) => {
 
 export const getStatsThunk = async (_, thunkApi) => {
 	try {
-		const resp = await customUrl.get("/jobs/stats", {
-			headers: {
-				authorization: `Bearer ${thunkApi.getState().user.user.token}`,
-			},
-		});
-		console.log(resp.data);
+		const resp = await customUrl.get("/jobs/stats");
 		return resp.data;
 	} catch (error) {
 		return thunkApi.rejectWithValue(error.response.data.msg);
