@@ -1,4 +1,4 @@
-import customUrl from "../../utils/axios";
+import customUrl, { checkForUnauthorizedResponse } from "../../utils/axios";
 
 export const getAllJobsThunk = async (_, thunkApi) => {
 	const { page, search, searchStatus, searchType, sort } =
@@ -13,7 +13,7 @@ export const getAllJobsThunk = async (_, thunkApi) => {
 		const resp = await customUrl.get(url);
 		return resp.data;
 	} catch (error) {
-		return thunkApi.rejectWithValue(error.response.data.msg);
+		return checkForUnauthorizedResponse(error);
 	}
 };
 
@@ -22,6 +22,6 @@ export const getStatsThunk = async (_, thunkApi) => {
 		const resp = await customUrl.get("/jobs/stats");
 		return resp.data;
 	} catch (error) {
-		return thunkApi.rejectWithValue(error.response.data.msg);
+		return checkForUnauthorizedResponse(error);
 	}
 };
