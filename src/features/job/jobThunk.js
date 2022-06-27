@@ -16,10 +16,8 @@ export const createJobThunk = async (job, thunkApi) => {
 export const deleteJobThunk = async (jobId, thunkApi) => {
 	//trigger loading from allJobs slice
 	thunkApi.dispatch(showLoading());
-	console.log(jobId);
 	try {
 		const resp = await customUrl.delete(`/jobs/${jobId}`);
-		console.log(resp.data);
 		//trigger jobs renew by using getAllJobs method from AllJobs slice
 		//loading will automatically be handled in getAllJobs extrareducers
 		thunkApi.dispatch(getAllJobs());

@@ -82,7 +82,6 @@ const userSlice = createSlice({
 		},
 		// error
 		[registerUser.rejected]: (state, { payload }) => {
-			console.log(payload);
 			state.isLoading = false;
 			toast.error(payload);
 		},
